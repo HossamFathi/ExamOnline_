@@ -1,0 +1,68 @@
+﻿@model ExamOnline.ViewModel.ExamViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Exam</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExamName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.ExamName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExamName, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(model => model.ExamHours, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.ExamHours, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExamHours, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionsID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <input type="checkbox" id="CheckAll" class="checkbox-inline" />
+
+        <div class="col-md-4 ">
+            @foreach (var question in Model.Questions)
+            {
+                <div class="form-control">
+                    <span class="caption"> @question.Text</span>
+                    <input type="checkbox" class="check "  name="QuestionsID" value="@question.ID" style="position:absolute; right:10%" />
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    
+    $("#CheckAll").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    </script>
+}

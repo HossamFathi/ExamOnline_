@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using ExamOnline.Logic;
+using ExamOnline.Models;
+using ExamOnline.ViewModel;
+
+namespace ExamOnline.Controllers
+{
+    public class ExamsController : Controller
+    {
+        private OnlineExaminationDBEntities db = new OnlineExaminationDBEntities();
+        private readonly ExamLogic _Logic;
+        public ExamsController()
+        {
+            _Logic = new ExamLogic();
+        }
+     
+        public ActionResult index()
+        {
+          var Exams =  db.Exams.ToList();
+            Dispose(true);
+            return View(Exams);
+        }
+
+     
+       [HttpPost]
+        public ActionResult Details(int id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                Exam exam = db.Exams.Where(Exam => Exam.ID == id).Include("ExamQuestions").SingleOrDefault();
+                return PartialView("_Details" ,exam);
+            }
+            return HttpNotFound();
+           
+        }
+
+        // GET: Exams/Create
+        public ActionResult Create()
+        {
+            ExamViewModel exam = new ExamViewModel();
+            exam.Questions = db.Questions.ToList();
+            return View(exam);
+        }
+
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,ExamName,ExamHours,QuestionsID")] ExamViewModel exam)
+        {
+            if (ModelState.IsValid)
+            {
+                if(_Logic.Create(exam)!= null )
+                    return RedirectToAction("Index");
+            }
+            exam.Questions = db.Questions.ToList();
+            return View(exam);
+        }
+
+       
+       
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}
