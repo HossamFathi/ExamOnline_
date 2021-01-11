@@ -23,44 +23,49 @@
 <div style="margin-top:5rem">
 
 
-    
+
     @using (Html.BeginForm())
     {
         foreach (var question in Model.ExamQuestions)
         {
-            <fieldset class="form-group" style="min-width:40%">
-                <legend> @question.Question.Text ? </legend>
-                @if (question.Question.IsSingleAnswer)
-                {
-                    foreach (var answer in question.Question.Answers)
+            if (question.Question.Answers.Count() > 0)
+            {
+                <fieldset class="form-group" style="min-width:40%">
+                    <legend> @question.Question.Text  </legend>
+
+                    @if (question.Question.IsSingleAnswer)
                     {
-                        <div class="form-control" style="margin:1%">
-                            <label>@answer.Text </label>
-                            <input type="radio" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
-                        </div>
+                        foreach (var answer in question.Question.Answers)
+                        {
+                    <div class="form-control" style="margin:1%">
+                        <label>@answer.Text </label>
+                        <input type="radio" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
+                    </div>
+                        }
+
                     }
-
-                }
-                else
-                {
-
-                    foreach (var answer in question.Question.Answers)
+                    else
                     {
-                        <div class="form-control" style="margin:1%">
-                            <label>@answer.Text </label>
-                            <input type="checkbox" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
-                        </div>
-                    }
 
-                }
-            </fieldset>
+                        foreach (var answer in question.Question.Answers)
+                        {
+                    <div class="form-control" style="margin:1%">
+                        <label>@answer.Text </label>
+                        <input type="checkbox" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
+                    </div>
+                        }
+
+                    }
+                    
+                </fieldset>
+            }
         }
 
-        <div class="form-group">
-            <div class=" col-md-8">
-                <input type="submit" value="Submit" class="btn btn-success" />
+            <div class="form-group">
+                <div class=" col-md-8">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 

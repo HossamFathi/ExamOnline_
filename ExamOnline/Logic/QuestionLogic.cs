@@ -33,7 +33,7 @@ namespace ExamOnline.Logic
       private Question AddQuestion(QuestionViewModel Question) {
             Question question = new Question
             {
-                Text = Question.Text,
+                Text = Question.Text + " ?",
                 IsSingleAnswer = !Question.IsSingleAnswer
             };
             _Context.Questions.Add(question);
