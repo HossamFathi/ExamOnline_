@@ -28,34 +28,37 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.QuestionsID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <input type="checkbox" id="CheckAll" class="checkbox-inline" />
-
-        <div class="col-md-4 ">
-            @foreach (var question in Model.Questions)
-            {
-                <div class="form-control">
-                    <span class="caption"> @question.Text</span>
-                    <input type="checkbox" class="check "  name="QuestionsID" value="@question.ID" style="position:absolute; right:10%" />
-                </div>
-
-            }
-
-        </div>
-    </div>
-
+    <fieldset>
+        <legend>
+            @Html.LabelFor(model => model.QuestionsID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <input type="checkbox" id="CheckAll" class="checkbox-inline" style="position:absolute; right:15%"  />
+        </legend>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+           
+
+            <div class="col-md-12 ">
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="form-control" style="margin:1rem">
+                        <span class="caption" style="max-width:60%"> @question.Text</span>
+                        <input type="checkbox" class="check " name="QuestionsID" value="@question.ID" style="position:absolute; right:10%" />
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </fieldset>
+        <div class="form-group">
+            <div class=" col-md-10">
+                <input type="submit" value="Submit" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -7,11 +7,12 @@
 <div class="form-group">
     <div class="col-lg-6">
         <h3>@Html.DisplayNameFor(model => model.ExamName) </h3>
-
+        <h5>@Html.DisplayFor(model => model.ExamName) </h5>
 
     </div>
     <div class="col-lg-6">
         <h3>@Html.DisplayNameFor(model => model.ExamHours)</h3>
+        <h5>@Html.DisplayFor(model => model.ExamHours)</h5>
 
 
     </div>
@@ -22,33 +23,20 @@
 <div style="margin-top:5rem">
 
 
-    <div class="form-group">
-        <div class="col-lg-6">
-            <h5>@Html.DisplayFor(model => model.ExamName) </h5>
-
-
-        </div>
-        <div class="col-lg-6">
-            <h5>@Html.DisplayFor(model => model.ExamHours)</h5>
-
-
-        </div>
-
-
-    </div>
+    
     @using (Html.BeginForm())
     {
         foreach (var question in Model.ExamQuestions)
         {
-            <div>
-                <label> @question.Question.Text</label>
+            <fieldset class="form-group" style="min-width:40%">
+                <legend> @question.Question.Text ? </legend>
                 @if (question.Question.IsSingleAnswer)
                 {
                     foreach (var answer in question.Question.Answers)
                     {
-                        <div class="form-control">
-                            <label>@answer.Text</label>
-                            <input type="radio" name="answer" value="@answer.ID" style="position: absolute; right: 10%" />
+                        <div class="form-control" style="margin:1%">
+                            <label>@answer.Text </label>
+                            <input type="radio" name="@answer.Text" value="@answer.ID" style="position: absolute; right: 10%" />
                         </div>
                     }
 
@@ -58,14 +46,14 @@
 
                     foreach (var answer in question.Question.Answers)
                     {
-                        <div class="form-control">
-                            <label>@answer.Text</label>
-                            <input type="checkbox" name="answer" value="@answer.ID" style="position: absolute; right: 10%" />
+                        <div class="form-control" style="margin:1%">
+                            <label>@answer.Text </label>
+                            <input type="checkbox" name="@answer.Text" value="@answer.ID" style="position: absolute; right: 10%" />
                         </div>
                     }
 
                 }
-            </div>
+            </fieldset>
         }
 
         <div class="form-group">

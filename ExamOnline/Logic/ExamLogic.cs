@@ -2,6 +2,7 @@
 using ExamOnline.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -67,6 +68,25 @@ namespace ExamOnline.Logic
 
         }
 
-        
+        public IEnumerable<Exam> GetExams()
+        {
+
+            return _Context.Exams.ToList();
+        }
+        public Exam GetExam(int ExamID)
+        {
+
+            return _Context.Exams.Where(Exam => Exam.ID == ExamID).Include("ExamQuestions").SingleOrDefault(); ;
+        }
+        public ExamViewModel GetExamViewModel()
+        {
+
+            ExamViewModel exam = new ExamViewModel();
+            exam.Questions = _Context.Questions.ToList();
+            return exam;
+        }
+
+
+
     }
 }

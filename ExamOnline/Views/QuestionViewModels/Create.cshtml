@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>QuestionViewModel</h4>
+    <h4>Question</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -32,40 +32,37 @@
         </div>
     </div>
 
-    @Html.Label("Answers", htmlAttributes: new { @class = "control-label col-md-2 " , style= "float: none;margin-bottom: 3rem; " })
-    <div class="form-group container" style=" display: block;margin-left: 10%;" id="Answers">
+   
+<fieldset >
+    <legend>Answers</legend>
+    <div class="form-group container " style=" display: block;margin-left: 10%;" id="Answers">
 
-        <div class="col-md-10 center-block">
-            <span class="col-md-2">Answer Text : </span>
+        <div class="col-md-12" style="margin:1rem">
+            <span class="col-md-2 " style="width:10.666667%">Answer Text : </span>
             <input type="text" name="Answers[0].Text" required class="form-control  col-md-6" />
             <span class="col-md-1">Correct </span>
             <input type="checkbox" name="Answers[0].IsTrueAnswer" value="true" class="checkbox-inline  col-md-1" />
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="button" value="Add" id="ADD" class="btn btn-info" />
-        </div>
-    </div>
+</fieldset>
+   
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div class=" col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" />
+            <input type="button" value="Add" id="ADD" class="btn btn-info" />
         </div>
     </div>
 </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-
+  
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script>
             var AnswerNumber = 1;
             $('body').on('click', '#ADD', function () {
-                var newAnswer = '<div class="col-md-10" > <span class="col-md-2">Answer Text : </span> <input type="text" name="Answers[' + AnswerNumber + '].Text" required class="form-control col-md-6" />  <span class="col-md-1">Correct  </span> <input type="checkbox" name="Answers[' + AnswerNumber + '].IsTrueAnswer" value="true" class="checkbox-inline col-md-1" /> </div>'
+                var newAnswer = '<div class="col-md-12" style="margin:1rem"> <span class="col-md-2" style="width:10.666667%">Answer Text : </span> <input type="text" name="Answers[' + AnswerNumber + '].Text" required class="form-control col-md-6" />  <span class="col-md-1">Correct  </span> <input type="checkbox" name="Answers[' + AnswerNumber + '].IsTrueAnswer" value="true" class="checkbox-inline col-md-1" /> </div>'
                 AnswerNumber++;
                 $('#Answers').append(newAnswer);
 

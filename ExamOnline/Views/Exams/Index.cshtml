@@ -5,19 +5,22 @@
 }
 
 
+<div class="jumbotron">
 
-<div class="form-inline">
+
     <h4>Select Exam</h4>
-
-
     <div class="form-group" id="DropDown">
 
         <div class="col-md-10">
-            @Html.DropDownList("ExamID", new SelectList(Model, "ID", "ExamName")  , new { @class = "form-control " } )
+
+            @Html.DropDownList("ExamID", new SelectList(Model, "ID", "ExamName" ) ,new { @class = "form-control " } )
 
         </div>
     </div>
+
+
 </div>
+
 <div class="container" id="ExamContent">
 
 </div>
@@ -25,14 +28,14 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $('body').on('change click', '#ExamID', function () {
-          
+
             var SelectedID = $('#ExamID option:selected').val();
 
             $.ajax(
                 {
                     type: "POST",
                     url: "/Exams/Details/" + SelectedID,
-                     
+
                     dataType: "html",
                     success: function (data) {
                         $('#ExamContent').html(data);

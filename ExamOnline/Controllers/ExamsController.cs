@@ -23,7 +23,7 @@ namespace ExamOnline.Controllers
      
         public ActionResult index()
         {
-          var Exams =  db.Exams.ToList();
+           var  Exams = _Logic.GetExams();
             Dispose(true);
             return View(Exams);
         }
@@ -34,18 +34,17 @@ namespace ExamOnline.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                Exam exam = db.Exams.Where(Exam => Exam.ID == id).Include("ExamQuestions").SingleOrDefault();
+                Exam exam = _Logic.GetExam(id);
                 return PartialView("_Details" ,exam);
             }
             return HttpNotFound();
            
         }
 
-        // GET: Exams/Create
+       
         public ActionResult Create()
         {
-            ExamViewModel exam = new ExamViewModel();
-            exam.Questions = db.Questions.ToList();
+            ExamViewModel exam = _Logic.GetExamViewModel();
             return View(exam);
         }
 
@@ -63,8 +62,20 @@ namespace ExamOnline.Controllers
             return View(exam);
         }
 
-       
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExamSubmit([Bind(Include = "ID,ExamName,ExamHours,QuestionsID")] ExamViewModel exam)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_Logic.Create(exam) != null)
+                    return RedirectToAction("Index");
+            }
+            exam.Questions = db.Questions.ToList();
+            return View(exam);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
