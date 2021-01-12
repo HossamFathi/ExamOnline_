@@ -64,15 +64,10 @@ namespace ExamOnline.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExamSubmit([Bind(Include = "ID,ExamName,ExamHours,QuestionsID")] ExamViewModel exam)
+        public ActionResult ExamSubmit()
         {
-            if (ModelState.IsValid)
-            {
-                if (_Logic.Create(exam) != null)
-                    return RedirectToAction("Index");
-            }
-            exam.Questions = db.Questions.ToList();
-            return View(exam);
+            // Not implemented Function
+            return RedirectToAction("index") ;
         }
 
 

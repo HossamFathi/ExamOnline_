@@ -24,8 +24,9 @@
 
 
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("ExamSubmit", "Exams"))
     {
+        @Html.AntiForgeryToken()
         foreach (var question in Model.ExamQuestions)
         {
             if (question.Question.Answers.Count() > 0)
@@ -37,10 +38,10 @@
                     {
                         foreach (var answer in question.Question.Answers)
                         {
-                    <div class="form-control" style="margin:1%">
-                        <label>@answer.Text </label>
-                        <input type="radio" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
-                    </div>
+                            <div class="form-control" style="margin:1%">
+                                <label>@answer.Text </label>
+                                <input type="radio" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
+                            </div>
                         }
 
                     }
@@ -49,23 +50,24 @@
 
                         foreach (var answer in question.Question.Answers)
                         {
-                    <div class="form-control" style="margin:1%">
-                        <label>@answer.Text </label>
-                        <input type="checkbox" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
-                    </div>
+                            <div class="form-control" style="margin:1%">
+                                <label>@answer.Text </label>
+                                <input type="checkbox" name="@question.ID" value="@answer.ID" style="position: absolute; right: 10%" />
+                            </div>
                         }
 
                     }
-                    
+
+
                 </fieldset>
             }
         }
 
-            <div class="form-group">
-                <div class=" col-md-8">
-                    <input type="submit" value="Submit" class="btn btn-success" />
-                </div>
+        <div class="form-group">
+            <div class=" col-md-8">
+                <input type="submit" value="Submit" class="btn btn-success" />
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
