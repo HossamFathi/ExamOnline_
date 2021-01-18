@@ -76,6 +76,7 @@ namespace ExamOnline.Controllers
             if (disposing)
             {
                 db.Dispose();
+                
             }
             base.Dispose(disposing);
         }
